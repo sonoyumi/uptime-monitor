@@ -1,13 +1,8 @@
-"""Точка входа: `python -m uptime_monitor` или команда `uptime-monitor`."""
+"""Entry points: `python -m uptime_monitor` or the `uptime-monitor` command."""
 
+import sys
 
-def greet(name: str) -> str:
-    return f"Привет, {name}!"
-
-
-def main() -> None:
-    print(greet("мир"))
-
+from uptime_monitor.cli import main
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

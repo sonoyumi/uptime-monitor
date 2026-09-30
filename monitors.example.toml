@@ -1,0 +1,39 @@
+# Скопируйте в monitors.toml и впишите свои сервисы. Сам monitors.toml в git не попадает.
+#
+# [defaults] — общие значения для всех мониторов (каждый может переопределить).
+# type = "http" | "tcp" | "tls"
+
+[defaults]
+interval = 60           # как часто проверять, секунд (не меньше 10)
+timeout = 10            # сколько ждать ответа, секунд
+fail_threshold = 3      # сколько неудач подряд = «сервис упал» (защита от ложных тревог)
+recover_threshold = 2   # сколько успехов подряд = «сервис снова работает»
+remind_every = 1800     # пока лежит — напоминать каждые N секунд (0 — не напоминать)
+
+[[monitor]]
+name = "Сайт example.com"
+type = "http"
+url = "https://example.com/"
+keyword = "Example Domain"     # страница должна содержать этот текст
+max_latency_ms = 5000          # медленнее — считается проблемой
+
+[[monitor]]
+name = "API health"
+type = "http"
+url = "https://httpbin.org/status/200"
+expect_status = [200]
+interval = 120
+
+[[monitor]]
+name = "DNS Cloudflare (TCP 53)"
+type = "tcp"
+host = "1.1.1.1"
+port = 53
+
+[[monitor]]
+name = "Сертификат github.com"
+type = "tls"
+host = "github.com"
+port = 443
+cert_days = 14                 # тревога, если сертификат истекает раньше чем через 14 дней
+interval = 3600
